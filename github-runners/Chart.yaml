@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for installing github runners
+name: devsecops-github-runners
+version: 1.0.0
+dependencies:
+  - name: gha-runner-scale-set-controller
+    version: 0.9.3
+    repository: oci://ghcr.io/actions/actions-runner-controller-charts
+  - name: gha-runner-scale-set
+    version: 0.9.3
+    repository: oci://ghcr.io/actions/actions-runner-controller-charts
