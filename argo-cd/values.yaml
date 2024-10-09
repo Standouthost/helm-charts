@@ -1,0 +1,46 @@
+argo-cd:
+  configs:
+    rbac:
+      policy.csv: |
+        g, Standouthost:argocd-admins, role:admin
+        p, role:none, applications, get, */*, deny
+        p, role:none, certificates, get, *, deny
+        p, role:none, clusters, get, *, deny
+        p, role:none, repositories, get, *, deny
+        p, role:none, projects, get, *, deny
+        p, role:none, accounts, get, *, deny
+        p, role:none, gpgkeys, get, *, deny
+      policy.default: none
+      policy.matchMode: glob
+      scopes: '[openid,email,groups,profile]'
+    cm:
+      url: https://argocd.soh.re
+      admin.enabled: false
+      dex.config: |
+        logger:
+          level: debug
+          format: json
+        connectors:
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: Ov23lin5gGmq9Zb7UYv3
+              clientSecret: $argocd-sso:dex.github.clientSecret
+              loadAllGroups: true
+              teamNameField: slug
+
+  config:
+  dex:
+    enabled: true
+
+  notifications:
+    enabled: false
+  applicationSet:
+    enabled: false
+  server:
+    extraArgs:
+      - --insecure
+server:
+  ingress:
+    enabled: false
