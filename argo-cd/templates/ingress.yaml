@@ -10,5 +10,5 @@ spec:
     - match: Host(`argocd.soh.re`)
       kind: Rule
       services:
-        - name: {{ .Release.Name }}-argocd-server
+        - name: argocd-server
           port: 80
