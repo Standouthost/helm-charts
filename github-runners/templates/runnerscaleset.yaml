@@ -6,4 +6,3 @@ spec:
   githubConfigSecret: {{ index .Values "gha-runner-scale-set" "githubConfigSecret" | quote }}
   githubConfigURL: {{ index .Values "gha-runner-scale-set" "githubConfigUrl" | quote }}
   name: {{ index .Values "gha-runner-scale-set" "runnerScaleSetName" | quote }}
-
