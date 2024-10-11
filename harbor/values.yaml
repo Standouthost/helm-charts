@@ -1,0 +1,7 @@
+harbor:
+  expose:
+    type: clusterIP
+    externalURL: https://harbor.soh.re
+    tls:
+      auto:
+        commonName: harbor.soh.re
