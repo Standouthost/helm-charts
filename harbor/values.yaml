@@ -1,10 +1,7 @@
 harbor:
+  externalURL: https://harbor.soh.re
   expose:
-    ingress:
-      hosts:
-        core: harbor.soh.re
     type: clusterIP
-    externalURL: https://harbor.soh.re
     tls:
       auto:
         commonName: harbor.soh.re
