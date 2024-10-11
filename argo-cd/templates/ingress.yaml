@@ -1,14 +1,16 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
 metadata:
-  name: argocd-ingressroute
+  name: argocd-virtualservice
   namespace: argocd
 spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`argocd.soh.re`)
-      kind: Rule
-      services:
-        - name: argocd-server
-          port: 80
+  hosts:
+  - "argocd.soh.re"
+  gateways:
+  - istio-system/http-gateway
+  http:
+  - route:
+    - destination:
+        host: argocd-server.argocd.svc.cluster.local  # Service name and namespace for ArgoCD
+        port:
+          number: 80
