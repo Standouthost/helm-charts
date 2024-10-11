@@ -1,15 +1,15 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: argocd-virtualservice
+  name: longhorn-virtualservice
 spec:
   hosts:
-  - "argocd.soh.re"
+  - "longhorn.soh.re"
   gateways:
   - istio-system/http-gateway
   http:
   - route:
     - destination:
-        host: argocd-server.argocd.svc.cluster.local  # Service name and namespace for ArgoCD
+        host: longhorn-frontend.longhorn.svc.cluster.local
         port:
           number: 80
