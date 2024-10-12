@@ -84,7 +84,7 @@ harbor:
 
   nginx:
     revisionHistoryLimit: 1
-    replicas: 1
+    replicas: 0
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

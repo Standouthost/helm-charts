@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: harbor-registry
+spec:
+  hosts:
+  - harbor.soh.re
+  ports:
+  - number: 5000
+    name: http-registry
+  location: MESH_INTERNAL
+  resolution: NONE

@@ -5,11 +5,38 @@ metadata:
 spec:
   gateways:
   - istio-system/http-gateway
+  - mesh
   hosts:
-  - harbor.soh.re
+    - harbor.soh.re
   http:
-    - route:
+    - name: 'registry'
+      match:
+        - port: 5000
+      route:
         - destination:
-            host: harbor
+            host: harbor-registry
+            port:
+              number: 5000   
+    - name: 'core'
+      match:
+        - uri:
+            prefix: '/api/'
+        - uri:
+            prefix: '/service/'
+        - uri:
+            prefix: '/v2/'
+        - uri:
+            prefix: '/chartrepo/'
+        - uri:
+            prefix: '/c/'
+      route:
+        - destination:
+            host: harbor-core
+            port:
+              number: 80
+    - name: 'portal'
+      route:
+        - destination:
+            host: harbor-portal
             port:
               number: 80
