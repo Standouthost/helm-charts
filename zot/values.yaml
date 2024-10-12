@@ -1,4 +1,6 @@
 zot:
+  strategy:
+    type: Recreate
   service:
     type: ClusterIP
   persistence: true
