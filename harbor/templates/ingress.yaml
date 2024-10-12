@@ -50,10 +50,13 @@ spec:
           number: 80
   - match:
     - uri:
-        prefix: /v2/
+        prefix: /v2
+    name: registry
+    rewrite:
+      authority: harbor-registry.harbor.svc.cluster.local
     route:
     - destination:
-        host: harbor-core
+        host: harbor-core.harbor.svc.cluster.local
         port:
           number: 80
   - name: portal
