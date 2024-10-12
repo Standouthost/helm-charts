@@ -5,9 +5,17 @@ metadata:
 spec:
   gateways:
   - istio-system/http-gateway
+  - mesh
   hosts:
   - harbor.soh.re
   http:
+  - match:
+    - port: 5000
+    route:
+    - destination:
+        host: harbor-registry.harbor.svc.cluster.local
+        port:
+          number: 5000
   - match:
     - uri:
         prefix: /api/
@@ -50,13 +58,10 @@ spec:
           number: 80
   - match:
     - uri:
-        prefix: /v2
-    name: registry
-    rewrite:
-      authority: harbor-registry.harbor.svc.cluster.local
+        prefix: /v2/
     route:
     - destination:
-        host: harbor-core.harbor.svc.cluster.local
+        host: harbor-core
         port:
           number: 80
   - name: portal
