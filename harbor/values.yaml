@@ -40,11 +40,11 @@ harbor:
                 values: ["amd64"]
   registry:
     credentials:
-    username: 'harbor'
-    password: 'password'
-    # If you update the username or password of registry, make sure use cli tool htpasswd to generate the bcrypt hash
-    # e.g. "htpasswd -nbBC10 $username $password"
-    htpasswd: 'harbor:$2y$10$o1jo.OXGFzLybskTVQ/xcuLs58mV6M91xsg/TZ852e7EgGS3LpuPS'
+      username: 'harbor'
+      password: 'password'
+      # If you update the username or password of registry, make sure use cli tool htpasswd to generate the bcrypt hash
+      # e.g. "htpasswd -nbBC10 $username $password"
+      htpasswd: 'harbor:$2y$10$o1jo.OXGFzLybskTVQ/xcuLs58mV6M91xsg/TZ852e7EgGS3LpuPS'
     revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
