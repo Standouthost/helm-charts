@@ -6,3 +6,45 @@ zot:
     create: true
   nodeSelector:
     kubernetes.io/arch: amd64
+  externalSecrets:
+    - secretName: "sso-secret"
+      mountPath: "/secrets/clientSecret"
+  mountConfig: true
+  configFiles:
+    config.json: |-
+      {
+        "storage": { "rootDirectory": "/var/lib/registry" },
+        "http": {
+          "address": "0.0.0.0", 
+          "port": "5000",
+          "externalUrl": "https://zot.soh.re",
+          "auth": {
+            "openid": {
+              "providers": {
+                "github": {
+                  "clientid": Ov23liLygAflIzrCKJhi,
+                  "clientsecret": { "clientSecret": { "path": "/secret/clientSecret" } },
+                  "scopes": ["read:org", "user", "repo"]
+                }
+              }
+            }
+          },
+          "accessControl": {
+            "repositories": {
+              "**": {
+                "policies": [{
+                  "users": ["jon@soh.re"],
+                  "actions": ["read", "create", "update"]
+                }],
+                "defaultPolicy": ["read"],
+                "anonymousPolicy": ["read"]
+              },
+            },
+            "adminPolicy": {
+              "users": ["admin"],
+              "actions": ["read", "create", "update", "delete"]
+            }
+        },
+        "log": { "level": "debug" }
+      }
+    
