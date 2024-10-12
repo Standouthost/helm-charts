@@ -3,8 +3,7 @@ harbor:
   expose:
     type: clusterIP
     tls:
-      auto:
-        commonName: harbor.soh.re
+      enabled: false
 
   portal:
     affinity:
