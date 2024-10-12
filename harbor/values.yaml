@@ -40,7 +40,6 @@ harbor:
                 values: ["amd64"]
   registry:
     revisionHistoryLimit: 1
-    relativeurls: true
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
