@@ -46,7 +46,7 @@ spec:
         prefix: /v1/
     route:
     - destination:
-        host: harbor-core
+        host: harbor-registry
         port:
           number: 80
   - match:
