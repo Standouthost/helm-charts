@@ -1,4 +1,6 @@
 harbor:
+  updateStrategy:
+    type: Recreate
   externalURL: https://harbor.soh.re
   expose:
     type: clusterIP
@@ -6,6 +8,7 @@ harbor:
       enabled: false
 
   portal:
+    revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -15,6 +18,7 @@ harbor:
                 operator: In
                 values: ["amd64"]
   core:
+    revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -25,6 +29,7 @@ harbor:
                 values: ["amd64"]
 
   jobservice:
+    revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,6 +39,7 @@ harbor:
                 operator: In
                 values: ["amd64"]
   registry:
+    revisionHistoryLimit: 1
     relativeurls: true
     affinity:
       nodeAffinity:
@@ -44,6 +50,7 @@ harbor:
                 operator: In
                 values: ["amd64"]
   database:
+    revisionHistoryLimit: 1
     internal:
       affinity:
         nodeAffinity:
@@ -54,6 +61,7 @@ harbor:
                   operator: In
                   values: ["amd64"]
   redis:
+    revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,6 +72,7 @@ harbor:
                 values: ["amd64"]
 
   exporter:
+    revisionHistoryLimit: 1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -74,4 +83,5 @@ harbor:
                 values: ["amd64"]
 
   nginx:
+    revisionHistoryLimit: 1
     replicas: 0
