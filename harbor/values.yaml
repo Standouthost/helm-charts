@@ -84,4 +84,4 @@ harbor:
 
   nginx:
     revisionHistoryLimit: 1
-    replicas: 0
+    replicas: 1

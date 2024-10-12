@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: harbor
+spec:
+  gateways:
+  - istio-system/http-gateway
+  hosts:
+  - harbor.soh.re
+  http:
+    - route:
+        - destination:
+            host: harbor
+            port:
+              number: 80
