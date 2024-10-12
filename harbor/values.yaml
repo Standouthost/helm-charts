@@ -35,6 +35,7 @@ harbor:
                 operator: In
                 values: ["amd64"]
   registry:
+    relativeurls: true
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
