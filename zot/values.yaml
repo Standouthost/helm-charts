@@ -1,6 +1,7 @@
 zot:
   strategy:
     type: Recreate
+    rollingUpdate: []
   service:
     type: ClusterIP
   persistence: true
