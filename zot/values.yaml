@@ -25,7 +25,7 @@ zot:
             "openid": {
               "providers": {
                 "github": {
-                  "clientid": Ov23liLygAflIzrCKJhi,
+                  "clientid": "Ov23liLygAflIzrCKJhi",
                   "clientsecret": { "clientSecret": { "path": "/secret/clientSecret" } },
                   "scopes": ["read:org", "user", "repo"]
                 }
