@@ -1,0 +1,6 @@
+zot:
+  service:
+    type: ClusterIP
+  persistence: true
+  pvc:
+    create: true
