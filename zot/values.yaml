@@ -24,6 +24,20 @@ zot:
       {
         "storage": { "rootDirectory": "/var/lib/registry" },
         "log": { "level": "debug" },
+        "extensions": {
+          "metrics": {
+            "enable": true
+          },
+          "search": {
+            "enable": true,
+            "cve": {
+              "enable": true
+            }
+          },
+          "ui": {
+            "enable": true
+          }
+        },
         "http": {
           "address": "0.0.0.0",
           "port": "5000",
