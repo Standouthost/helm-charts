@@ -31,7 +31,7 @@ zot:
           "search": {
             "enable": true,
             "cve": {
-              "enable": true
+              "updateInterval": "2h"
             }
           },
           "ui": {
