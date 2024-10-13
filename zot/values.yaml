@@ -1,4 +1,10 @@
 zot:
+  env:
+    - name: GITHUB_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: sso-secret
+          key: clientSecret
   strategy:
     type: Recreate
     rollingUpdate: null
@@ -27,7 +33,7 @@ zot:
               "providers": {
                 "github": {
                   "clientid": "Ov23liLygAflIzrCKJhi",
-                  "clientsecret": { "path": "/secret/clientSecret" },
+                  "clientsecret": "${GITHUB_CLIENT_SECRET}",
                   "scopes": ["read:org", "user", "repo"]
                 }
               }
