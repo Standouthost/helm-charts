@@ -20,52 +20,54 @@ zot:
       mountPath: "/secrets/clientSecret"
   mountConfig: true
   configFiles:
-    config.json: |-
-      {
-        "storage": { "rootDirectory": "/var/lib/registry" },
-        "log": { "level": "debug" },
-        "extensions": {
-          "metrics": {
-            "enable": true
-          },
-          "search": {
-            "enable": true,
-            "cve": {
-              "updateInterval": "2h"
-            }
-          },
-          "ui": {
-            "enable": true
-          }
-        },
-        "http": {
-          "address": "0.0.0.0",
-          "port": "5000",
-          "externalUrl": "https://zot.soh.re",
-          "auth": {
-            "openid": {
-              "providers": {
-                "github": {
-                  "clientid": "Ov23liLygAflIzrCKJhi",
-                  "clientsecret": "${GITHUB_CLIENT_SECRET}",
-                  "scopes": ["read:org", "user", "repo"]
-                }
-              }
-            }
-          },
-          "accessControl": {
-            "repositories": {
-              "**": {
-                "policies": [
-                  {
-                    "users": ["jon@soh.re"],
-                    "actions": ["read", "create", "update"]
-                  }
-                ],
-                "defaultPolicy": ["read"],
-                "anonymousPolicy": ["read"]
-              }
-            }
-          }
-        }
-      }
+    config.json: null
+  # configFiles:
+  #   config.json: |-
+  #     {
+  #       "storage": { "rootDirectory": "/var/lib/registry" },
+  #       "log": { "level": "debug" },
+  #       "extensions": {
+  #         "metrics": {
+  #           "enable": true
+  #         },
+  #         "search": {
+  #           "enable": true,
+  #           "cve": {
+  #             "updateInterval": "2h"
+  #           }
+  #         },
+  #         "ui": {
+  #           "enable": true
+  #         }
+  #       },
+  #       "http": {
+  #         "address": "0.0.0.0",
+  #         "port": "5000",
+  #         "externalUrl": "https://zot.soh.re",
+  #         "auth": {
+  #           "openid": {
+  #             "providers": {
+  #               "github": {
+  #                 "clientid": "Ov23liLygAflIzrCKJhi",
+  #                 "clientsecret": "${GITHUB_CLIENT_SECRET}",
+  #                 "scopes": ["read:org", "user", "repo"]
+  #               }
+  #             }
+  #           }
+  #         },
+  #         "accessControl": {
+  #           "repositories": {
+  #             "**": {
+  #               "policies": [
+  #                 {
+  #                   "users": ["jon@soh.re"],
+  #                   "actions": ["read", "create", "update"]
+  #                 }
+  #               ],
+  #               "defaultPolicy": ["read"],
+  #               "anonymousPolicy": ["read"]
+  #             }
+  #           }
+  #         }
+  #       }
+  #     }
