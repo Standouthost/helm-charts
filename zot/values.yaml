@@ -38,21 +38,21 @@ zot:
                 }
               }
             }
-          }
-        },
-        "accessControl": {
-          "repositories": {
-            "**": {
-              "policies": [{
-                "users": ["jon@soh.re"],
-                "actions": ["read", "create", "update"]
-              }],
-              "defaultPolicy": ["read"],
-              "anonymousPolicy": ["read"]
-            },
-            "adminPolicy": {
-              "users": ["admin"],
-              "actions": ["read", "create", "update", "delete"]
+          },
+          "accessControl": {
+            "repositories": {
+              "**": {
+                "policies": [{
+                  "users": ["jon@soh.re"],
+                  "actions": ["read", "create", "update"]
+                }],
+                "defaultPolicy": ["read"],
+                "anonymousPolicy": ["read"]
+              },
+              "adminPolicy": {
+                "users": ["admin"],
+                "actions": ["read", "create", "update", "delete"]
+              }
             }
           }
         }
