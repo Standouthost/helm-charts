@@ -1,0 +1,10 @@
+apiVersion: v2
+name: mariadb-operator
+version: 1.0.0
+dependencies:
+  - name: mariadb-operator-crds
+    version: 0.34.0
+    repository: https://helm.mariadb.com/mariadb-operator
+  - name: mariadb-operator
+    version: 0.34.0
+    repository: https://helm.mariadb.com/mariadb-operator
