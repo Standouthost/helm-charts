@@ -1,0 +1,7 @@
+apiVersion: v2
+name: scalewatch
+version: 1.0.0
+dependencies:
+  - name: scalewatch
+    version: 0.1.0
+    repository: oci://zot.soh.re/scalewatch
