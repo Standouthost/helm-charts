@@ -13,6 +13,7 @@ zot:
   persistence: true
   pvc:
     create: true
+    storage: 80Gi
   nodeSelector:
     kubernetes.io/arch: amd64
   externalSecrets:
