@@ -1,0 +1,13 @@
+name: static-upgrade
+replicaCount: 2
+
+image:
+  repository: zot.soh.re
+  name: soh.re
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080

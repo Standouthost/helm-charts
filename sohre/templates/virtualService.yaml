@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: soh-re-virtualservice
+spec:
+  hosts:
+  - "soh.re"
+  gateways:
+  - istio-system/http-gateway
+  http:
+  - match:
+      - headers:
+          upgrade:
+            exact: "websocket"
+    route:
+      - destination:
+          host: "soh.re"
+          port:
+            number: 8085
+  - route:
+      - destination:
+          host: {{ .Values.name }}
+          port:
+            number: 80

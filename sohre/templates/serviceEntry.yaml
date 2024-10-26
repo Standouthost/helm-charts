@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: soh-re-service-entry
+spec:
+  hosts:
+  - "soh.re"
+  addresses:
+  - "130.61.159.173"
+  - "138.2.152.196"
+  ports:
+  - number: 8085
+    name: websocket-port
+    protocol: HTTP
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  endpoints:
+  - address: "130.61.159.173"
+    ports:
+      websocket-port: 8085
+  - address: "138.2.152.196"
+    ports:
+      websocket-port: 8085
