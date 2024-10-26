@@ -16,4 +16,4 @@ spec:
   endpoints:
   - address: "10.0.0.3"
     ports:
-      websocket-port: 8080
+      flights-port: 8080
