@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: longhorn-virtualservice
+spec:
+  gateways:
+  - istio-system/http-gateway
+  hosts:
+  - longhorn.soh.re
+  http:
+  - route:
+    - destination:
+        host: oauth2-proxy
+        port:
+          number: 80

@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-auth
+spec:
+  selector:
+    matchLabels:
+      app: longhorn-frontend
+  jwtRules:
+    - issuer: "https://longhorn.soh.re/oauth2"
+      jwksUri: "https://longhorn.soh.re/oauth2/.well-known/jwks.json"

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:v7.7.1
+        args:
+          - --http-address=0.0.0.0:4180
+          - --provider=github
+          - --redirect-url=https://longhorn.soh.re/oauth2/callback
+          - --upstream=http://longhorn-frontend.longhorn.svc.cluster.local:80
+          - --cookie-secure=true
+          - --cookie-samesite=lax
+          - --github-org=Standouthost
+          - --github-team=platform
+          - --email-domain=*
+          - "--standard-logging"   # Enable standard logging for debug
+          - "--request-logging"    # Enable request logging
+          - "--auth-logging"       # Enable auth logging
+        envFrom:
+          - secretRef:
+              name: longhorn-sso

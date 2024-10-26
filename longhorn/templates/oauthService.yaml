@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth2-proxy
+spec:
+  selector:
+    app: oauth2-proxy
+  ports:
+    - port: 80          # Expose port 80 for Istio to connect
+      targetPort: 4180   # Map to the actual target port of the oauth2-proxy container
+      protocol: TCP
