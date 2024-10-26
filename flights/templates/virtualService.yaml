@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: flights-re-virtualservice
+spec:
+  hosts:
+  - "flights.soh.re"
+  gateways:
+  - istio-system/http-gateway
+  http:
+  - route:
+      - destination:
+          host: flights.soh.re
+          port:
+            number: 8080

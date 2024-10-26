@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: flights-soh-re-service-entry
+spec:
+  hosts:
+  - "flights.soh.re"
+  addresses:
+  - "10.0.0.3"
+  ports:
+  - number: 8080
+    name: flights-port
+    protocol: HTTP
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  endpoints:
+  - address: "10.0.0.3"
+    ports:
+      websocket-port: 8080
