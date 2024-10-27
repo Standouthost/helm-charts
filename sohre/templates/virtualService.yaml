@@ -5,8 +5,9 @@ metadata:
 spec:
   hosts:
   - "soh.re"
+  - "www.soh.re"
   gateways:
-  - istio-system/http-gateway
+  - istio-system/soh-re-gateway
   http:
   - match:
       - headers:
@@ -17,6 +18,22 @@ spec:
           host: "soh.re"
           port:
             number: 8085
+  - match:
+    - authority:
+        regex: ^www\.(.*)
+      uri:
+        prefix: /
+    redirect:
+      authority: soh.re
+  - match:
+    - scheme:
+        exact: http
+      uri:
+        prefix: /
+    redirect:
+      redirectCode: 302
+      scheme: https
+
   - route:
       - destination:
           host: {{ .Values.name }}

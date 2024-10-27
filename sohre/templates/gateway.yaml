@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: soh-re-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - soh.re
+    - www.soh.re
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: soh-re-tls
+      mode: SIMPLE
+  - hosts:
+    - soh.re
+    - www.soh.re
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+    tls:
+      httpsRedirect: false
