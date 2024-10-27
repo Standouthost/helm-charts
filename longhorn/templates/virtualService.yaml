@@ -4,10 +4,18 @@ metadata:
   name: longhorn-virtualservice
 spec:
   gateways:
-  - istio-system/http-gateway
+  - istio-system/longhorn-soh-re-gateway
   hosts:
   - longhorn.soh.re
   http:
+  - match:
+    - scheme:
+        exact: http
+      uri:
+        prefix: /
+    redirect:
+      redirectCode: 302
+      scheme: https
   - route:
     - destination:
         host: oauth2-proxy
