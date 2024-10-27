@@ -41,6 +41,13 @@ argo-cd:
   server:
     extraArgs:
       - --insecure
-server:
-  ingress:
-    enabled: false
+    ingress:
+      enabled: false
+
+virtualService:
+  hosts:
+    - "argocd.soh.re"
+service:
+  name: argocd-server.argocd.svc.cluster.local
+  targetPort: 80
+name: argocd-server

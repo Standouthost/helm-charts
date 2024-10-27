@@ -27,6 +27,7 @@ spec:
       redirect:
         scheme: https
         redirectCode: 302
+
     - route:
         - destination:
             host: {{ .Values.service.name }}

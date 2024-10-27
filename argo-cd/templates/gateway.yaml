@@ -29,6 +29,5 @@ spec:
 {{- range .Values.virtualService.hosts }}
         - {{ . }}
 {{- end }}
-      # Redirect all HTTP traffic to HTTPS
       tls:
-        httpsRedirect: false #https://gruchalski.com/posts/2023-07-09-istio-cert-manager-lets-encrypt-and-https-redirect/
+        httpsRedirect: false # https://gruchalski.com/posts/2023-07-09-istio-cert-manager-lets-encrypt-and-https-redirect/
