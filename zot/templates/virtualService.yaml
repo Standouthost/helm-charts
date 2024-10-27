@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.name }}-vs
+spec:
+  hosts:
+{{- range .Values.virtualService.hosts }}
+    - {{ . }}
+{{- end }}
+  gateways:
+    - "istio-system/{{ .Release.Namespace }}-gateway"
+  http:
+{{- if .Values.virtualService.redirectToPrimary }}
+    - match:
+        - uri:
+            prefix: "/"
+          authority:
+            regex: "^www\\.(.*)"
+      redirect:
+        authority: "{{ .Values.virtualService.hosts | first }}"
+{{- end }}
+    - route:
+        - destination:
+            host: {{ .Values.service.name }}
+            port:
+              number: {{ .Values.service.targetPort }}

@@ -72,3 +72,11 @@ zot:
   #         }
   #       }
   #     }
+
+virtualService:
+  hosts:
+    - "zot.soh.re"
+service:
+  name: zot
+  targetPort: 5000
+name: zot-virtualservice
