@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: flights-soh-re-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - flights.soh.re
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: flights-soh-re-tls
+      mode: SIMPLE
+  - hosts:
+    - flights.soh.re
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+    tls:
+      httpsRedirect: false

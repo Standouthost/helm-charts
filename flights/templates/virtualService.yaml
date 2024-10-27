@@ -6,8 +6,16 @@ spec:
   hosts:
   - "flights.soh.re"
   gateways:
-  - istio-system/http-gateway
+  - istio-system/flights-soh-re-gateway
   http:
+  - match:
+    - scheme:
+        exact: http
+      uri:
+        prefix: /
+    redirect:
+      redirectCode: 302
+      scheme: https
   - route:
       - destination:
           host: flights.soh.re
