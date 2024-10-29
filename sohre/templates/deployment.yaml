@@ -18,3 +18,5 @@ spec:
         - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+      nodeSelector:
+        kubernetes.io/arch: amd64
