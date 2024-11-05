@@ -2,4 +2,7 @@ longhorn:
   preUpgradeChecker:
     jobEnabled: false
   defaultSettings:
-    taintToleration: "storage=restricted:NoSchedule"
+    defaultDataLocality: "best-effort"
+    defaultClassReplicaCount: 2
+    replicaSoftAntiAffinity: "disabled"
+    allowVolumeCreationWithDegradedAvailability: "disabled"
