@@ -14,10 +14,22 @@ spec:
           upgrade:
             exact: "websocket"
     route:
-      - destination:
-          host: "soh.re"
-          port:
-            number: 8085
+    - destination:
+        host: soh.re
+        port:
+          number: 8085
+      weight: 50
+    - destination:
+        host: vm3-soh-re-router
+        port:
+          number: 8085
+      weight: 25
+    - destination:
+        host: vm4-soh-re-router
+        port:
+          number: 8085
+      weight: 25
+
   - match:
     - authority:
         regex: ^www\.(.*)
@@ -25,6 +37,7 @@ spec:
         prefix: /
     redirect:
       authority: soh.re
+
   - match:
     - scheme:
         exact: http
