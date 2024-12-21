@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: soh-router
+  name: {{ .Values.name }}-router
 spec:
   selector:
     kubevirt.io/domain: {{ .Values.name }}
