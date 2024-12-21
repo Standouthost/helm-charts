@@ -1,0 +1,50 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: {{ .Values.name }}
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: {{ .Values.name }}
+    spec:
+      domain:
+        devices:
+          interfaces:
+            - name: default
+              masquerade: {}
+          disks:
+            - name: disk0
+              disk:
+                bus: virtio
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+      networks:
+        - name: default
+          pod: {} # Stock pod network
+      volumes:
+        - name: disk0
+          dataVolume:
+            name: {{ .Values.name }}
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              #https://github.com/kubevirt/kubevirt/issues/1646
+              write_files:
+                - encoding: b64
+                  content: bmV0d29yazoKICB2ZXJzaW9uOiAyCiAgZXRoZXJuZXRzOgogICAgaWQwOgogICAgICBkaGNwNDogdHJ1ZQogICAgICBtYXRjaDoKICAgICAgICBuYW1lOiBlbnAqCg==
+                  owner: root:root
+                  path: /etc/netplan/99-net-fix.yaml
+                  permissions: '0644'
+              packages:
+                - wireguard
+              runcmd:
+                - [ sh, -c, 'wg genkey | tee /etc/wireguard/$(hostname).private.key | wg pubkey > /etc/wireguard/$(hostname).public.key' ]
+              users:
+                - name: root
+                  ssh_authorized_keys:
+                    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDgNk9LK/BZk0Sga83brcZMebwgGz0hb+c6u8W8wEMp6uPOVZp2n8KntsB3HAGUPcqY2LXRaMZIzpIftgD1NRlVhxJDyO1rrZmedXA5zy0pGBdkAsnqGXI8ehde4wADEIATWDLHAcgU96TeUs4a4gO/cw7GaXvmubtru5YA0AB/YxiIMTKD+0lHqIUKNrSMIQU4SlzYD4+kdoeBsm57+pFoCUHOB4cZpB3vzHW3IVZOmfDGAQOzSwIM+NlOHFWoyr0RulQXELigSiRzQ0ZRh3BFEieWl/+1nGuxrggqB/x+3I+FpeMMT3RA0mA/an76CmU1ENw5DeF4DELNLf9Q1V9AzzrhLLfdZ89McW68UncsRqEi3sTHYMjljVLtKQtE2M21VEueDDIjUCe1cuPag7AI+YAlTGCysIrCojxzZGQd9a/nh4YxT+GIH0rTEP7un+VwMayschd+OaFxjD+1uTmrBCBg2zFlWxhr+G7juvJuF1FbtraaXY+qEj3BT9YchDE= jmainguy@jmainguy.soh.re

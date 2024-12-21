@@ -1,0 +1,16 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: {{ .Values.name }}
+spec:
+  source:
+    http:
+      url: "https://cdimage.debian.org/images/cloud/bookworm/20241125-1942/debian-12-generic-amd64-20241125-1942.qcow2"
+  pvc:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 20Gi
+    storageClassName: longhorn
+
