@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}-router
+  name: {{ .Values.name | replace "." "-" }}-router
 spec:
   selector:
     kubevirt.io/domain: {{ .Values.name }}
