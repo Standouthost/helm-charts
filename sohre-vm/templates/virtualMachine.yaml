@@ -40,10 +40,6 @@ spec:
                   owner: root:root
                   path: /etc/netplan/99-net-fix.yaml
                   permissions: '0644'
-              packages:
-                - wireguard
-              runcmd:
-                - [ sh, -c, 'wg genkey | tee /etc/wireguard/$(hostname).private.key | wg pubkey > /etc/wireguard/$(hostname).public.key' ]
               users:
                 - name: root
                   ssh_authorized_keys:
