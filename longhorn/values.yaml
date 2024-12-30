@@ -6,3 +6,5 @@ longhorn:
     defaultClassReplicaCount: 2
     replicaSoftAntiAffinity: "disabled"
     allowVolumeCreationWithDegradedAvailability: "disabled"
+    orphanAutoDeletion: "true"
+    rwxVolumeFastFailover: "true"
