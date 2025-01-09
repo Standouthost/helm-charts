@@ -29,6 +29,15 @@ argo-cd:
               clientSecret: $argocd-sso:dex.github.clientSecret
               loadAllGroups: true
               teamNameField: slug
+        staticClients:
+          - id: Ov23lin5gGmq9Zb7UYv3
+            name: Kubernetes
+            # These are kubectl oidc plugin internal URLs
+            redirectURIs:
+            - <http://localhost:8000>
+            - <http://localhost:18000>
+            # Communicate this secrets to users
+            secret: 8d52926efe879ee505391b75f4b046cf
 
   config:
   dex:
