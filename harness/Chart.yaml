@@ -1,0 +1,7 @@
+apiVersion: v2
+name: harness-delegate
+version: 1.0.0
+dependencies:
+  - name: harness-delegate-ng
+    version: v1.0.22
+    repository: https://app.harness.io/storage/harness-download/delegate-helm-chart/
