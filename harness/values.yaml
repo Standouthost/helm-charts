@@ -8,3 +8,4 @@ harness-delegate-ng:
   existingDelegateToken: "delegate-token"
   accountId: "pceuDjVIQT-rztB20qkFZw"
   delegateName: "mainguys-k3s-cluster"
+  delegateDockerImage: "harness/delegate:25.01.85000"
