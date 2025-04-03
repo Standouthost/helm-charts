@@ -38,14 +38,6 @@ argo-cd:
             - http://localhost:18000
             # Communicate this secrets to users
             secret: 8d52926efe879ee505391b75f4b046cf
-          - id: Ov23lin5gGmq9Zb7UYv4
-            name: oracle arm64 k8s cluster auth
-            # These are kubectl oidc plugin internal URLs
-            redirectURIs:
-            - http://localhost:8000
-            - http://localhost:18000
-            # Communicate this secrets to users
-            secret: 9d52926efe879ee505391b75f4b046cf
 
   config:
   dex:
