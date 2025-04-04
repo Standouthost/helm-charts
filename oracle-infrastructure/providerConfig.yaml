@@ -1,0 +1,29 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: oracle
+spec:
+  credentials:
+    - filename: oci_api_key.pem
+      source: Secret
+      secretRef:
+        namespace: crossplane
+        name: oracle-api-creds
+        key: oci_api_key.pem
+  configuration: |
+    provider "oci" {
+      tenancy_ocid     = var.tenancy_ocid
+      user_ocid        = var.user_ocid
+      fingerprint      = var.fingerprint
+      private_key_path = "oci_api_key.pem"
+      region           = var.region
+    }
+
+    terraform {
+      backend "kubernetes" {
+        secret_suffix     = "oracle"
+        namespace         = "crossplane"
+        in_cluster_config = true
+      }
+    }
+

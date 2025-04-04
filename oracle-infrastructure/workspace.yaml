@@ -1,0 +1,35 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: oracle-vms
+spec:
+  forProvider:
+    source: Remote
+    module:
+      git::https://github.com/Standouthost/oci-infrastructure//?ref=main
+    vars:
+      - key: tenancy_ocid
+        value: "ocid1.tenancy.oc1..aaaaaaaa275znqhjh65i7iz5fhio3q4dhywsavzbiubwwwuzzjt3nh4vwe2q"
+      - key: user_ocid
+        value: "ocid1.user.oc1..aaaaaaaantvuy2fdtwpb4hibprtmesmlgbaegzw2gmvjrm7acjv36fxwf65q"
+      - key: fingerprint
+        value: "16:6e:0f:b0:75:9e:df:33:32:14:33:41:64:a1:2c:a4"
+      - key: private_key_path
+        value: "/terraform/secrets/private.key"
+      - key: region
+        value: "eu-frankfurt-1"
+      - key: compartment_ocid
+        value: "ocid1.tenancy.oc1..aaaaaaaa275znqhjh65i7iz5fhio3q4dhywsavzbiubwwwuzzjt3nh4vwe2q"
+      - key: subnet_ocid
+        value: "ocid1.subnet.oc1.eu-frankfurt-1.aaaaaaaalw3xfjscxgmn2khvmbn2hvuzg2iawj3dclx5ljoy6h54ygwz3mlq"
+      - key: image_source_ocid
+        value: "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaaxmirlvvwnhwrg4lcfcwqd327nhkduwd6xyniamqnjjq2wq62c6wq"
+      - key: availability_domain
+        value: "nXUQ:EU-FRANKFURT-1-AD-2"
+      - key: ssh_public_key
+        value: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXksNPD7b1gg1Qi/4vJLu08wrBrY36W9tOaBhb2Js00 jmainguy@fedora.soh.re"
+  writeConnectionSecretToRef:
+    name: oracle-vm-creds
+    namespace: crossplane
+  providerConfigRef:
+    name: oracle
