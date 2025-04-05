@@ -1,9 +1,0 @@
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: soh-re-destinationrule
-spec:
-  host: soh.re
-  trafficPolicy:
-    loadBalancer:
-      simple: ROUND_ROBIN
