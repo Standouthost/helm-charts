@@ -28,8 +28,5 @@ spec:
         value: "nXUQ:EU-FRANKFURT-1-AD-2"
       - key: ssh_public_key
         value: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXksNPD7b1gg1Qi/4vJLu08wrBrY36W9tOaBhb2Js00 jmainguy@fedora.soh.re"
-  writeConnectionSecretToRef:
-    name: oracle-vm-creds
-    namespace: crossplane
   providerConfigRef:
     name: oracle
