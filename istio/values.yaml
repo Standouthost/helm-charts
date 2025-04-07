@@ -1,2 +1,4 @@
 gateway:
   name: istio-ingressgateway
+  service:
+    type: LoadBalancer
