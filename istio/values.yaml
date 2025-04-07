@@ -1,18 +1,2 @@
 gateway:
   name: istio-ingressgateway
-  service:
-    allocateLoadBalancerNodePorts: true
-    type: NodePort
-    ports:
-      - name: http2
-        port: 80
-        targetPort: 80
-        nodePort: 80  # Expose port 80 as NodePort
-      - name: https
-        port: 443
-        targetPort: 443
-        nodePort: 443  # Expose port 443 as NodePort
-      - name: status-port
-        port: 15021
-        targetPort: 15021
-
