@@ -2,3 +2,4 @@ gateway:
   name: istio-ingressgateway
   service:
     allocateLoadBalancerNodePorts: true
+    type: NodePort
