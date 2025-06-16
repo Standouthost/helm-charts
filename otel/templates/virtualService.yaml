@@ -13,6 +13,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: jaeger-inmemory-instance-collector.{{ .Release.Namesapce }}.svc.cluster.local
+        host: jaeger-inmemory-instance-collector.{{ .Release.Namespace }}.svc.cluster.local
         port:
           number: 16686
