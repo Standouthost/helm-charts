@@ -3,22 +3,20 @@ kind: OpenTelemetryCollector
 metadata:
   name: jaeger-inmemory-instance
 spec:
-  mode: deployment                     # REQUIRED: set collector mode
-  image: jaegertracing/jaeger:latest  # optional, override collector image
+  mode: deployment                     # Required
+  image: jaegertracing/jaeger:latest  # Optional override
   ports:
     - name: jaeger
       port: 16686
-  config: |
+  config:
     receivers:
       otlp:
         protocols:
-          grpc:
-          http:
-
+          grpc: {}
+          http: {}
     exporters:
       jaeger_storage_exporter:
         trace_storage: memstore
-
     extensions:
       jaeger_storage:
         backends:
@@ -28,10 +26,14 @@ spec:
       jaeger_query:
         storage:
           traces: memstore
-
     service:
-      extensions: [jaeger_storage, jaeger_query]
+      extensions:
+        - jaeger_storage
+        - jaeger_query
       pipelines:
         traces:
-          receivers: [otlp]
-          exporters: [jaeger_storage_exporter]
+          receivers:
+            - otlp
+          exporters:
+            - jaeger_storage_exporter
+
