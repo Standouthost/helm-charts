@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jaeger-ui
+spec:
+  hosts:
+  - "jaeger.soh.re"
+  gateways:
+  - istio-system/jaeger-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: jaeger-inmemory-instance-collector.{{ .Release.Namesapce }}.svc.cluster.local
+        port:
+          number: 16686

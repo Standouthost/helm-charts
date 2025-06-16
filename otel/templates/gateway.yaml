@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: jaeger-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - jaeger.soh.re
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: jaeger-tls
+      mode: SIMPLE
+  - hosts:
+    - jaeger.soh.re
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+    tls:
+      httpsRedirect: false
