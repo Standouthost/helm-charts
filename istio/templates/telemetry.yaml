@@ -6,3 +6,7 @@ spec:
   accessLogging:
   - providers:
     - name: envoy
+  tracing:
+  - providers:
+    - name: otel-tracing
+    randomSamplingPercentage: 100

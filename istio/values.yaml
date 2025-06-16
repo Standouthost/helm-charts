@@ -2,3 +2,16 @@ gateway:
   name: istio-ingressgateway
   service:
     type: LoadBalancer
+istiod:
+  meshConfig:
+    enableTracing: true
+    extensionProviders:
+    - name: otel-tracing
+      opentelemetry:
+        port: 4318
+        service: jaeger-inmemory-instance-collector.otel.svc.cluster.local
+        http:
+          path: "/v1/traces"
+          timeout: 5s
+        resource_detectors:
+          environment: {}
