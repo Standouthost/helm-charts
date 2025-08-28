@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-terraform
 spec:
-  package: xpkg.upbound.io/upbound/provider-terraform:v1
+  package: ghcr.io/crossplane-contrib/provider-terraform:v1.0.0
