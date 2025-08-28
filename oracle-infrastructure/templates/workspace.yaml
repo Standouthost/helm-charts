@@ -1,4 +1,4 @@
-apiVersion: tf.upbound.io/v1
+apiVersion: tf.upbound.io/v1beta1
 kind: Workspace
 metadata:
   name: oracle-vms
