@@ -1,0 +1,32 @@
+# Default values for github-secrets chart.
+# These values mirror the provided YAML files and can be overridden during install.
+
+clusterSecretStore:
+  provider:
+    github:
+      appID: 2267752
+      installationID: 94022774
+      organization: jmainguy
+      # repository is provided per-item in the top-level `repos` list
+      auth:
+        privateKey:
+          name: github-app-private-key
+          key: privateKey.pem
+
+pushSecret:
+  deletionPolicy: Delete
+  refreshInterval: 10m
+  selectorSecretName: github-secrets
+  data:
+    - secretKey: DOCKER_USERNAME
+      remoteKey: DOCKER_USERNAME
+    - secretKey: DOCKER_PASSWORD
+      remoteKey: DOCKER_PASSWORD
+    - secretKey: DOCKER_USERNAME
+      remoteKey: HELM_USERNAME
+    - secretKey: DOCKER_PASSWORD
+      remoteKey: HELM_PASSWORD
+# List of repositories to generate resources for. Each entry should be the
+# repository name (string). The chart will create a ClusterSecretStore named
+# "github-<organization>-<repo>" and a PushSecret named
+# "github-docker-secrets-<organization>-<repo>" for each repository below.
