@@ -15,12 +15,12 @@ spec:
             exact: "websocket"
     route:
     - destination:
-        host: vm3-soh-re-router
+        host: vm1.soh.re
         port:
           number: 8085
       weight: 50
     - destination:
-        host: vm4-soh-re-router
+        host: vm2.soh.re
         port:
           number: 8085
       weight: 50
