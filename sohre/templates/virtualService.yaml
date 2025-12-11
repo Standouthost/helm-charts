@@ -15,15 +15,9 @@ spec:
             exact: "websocket"
     route:
     - destination:
-        host: vm1.soh.re
+        host: sohk8s-proxy.sohk8s-system.svc.cluster.local
         port:
-          number: 8085
-      weight: 50
-    - destination:
-        host: vm2.soh.re
-        port:
-          number: 8085
-      weight: 50
+          number: 9090
 
   - match:
     - authority:
