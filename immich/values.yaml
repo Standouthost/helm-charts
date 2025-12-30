@@ -1,0 +1,80 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/immich-app/immich-server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+timezone: UTC
+
+persistence:
+  enabled: true
+  immich:
+    size: 10Gi
+
+cert:
+  enabled: true
+  issuer: letsencrypt-http
+
+virtualService:
+  hosts: [immich.soh.re]
+  name: immich
+  redirectToPrimary: true
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Upstream immich chart values
+immich:
+  valkey:
+    enabled: true
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            tag: v2.4.1
+          env:
+            REDIS_HOSTNAME: '{{ printf "%s-valkey" .Release.Name }}'
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+            DB_HOSTNAME: "{{ .Release.Name }}-postgres-rw.immich.svc.cluster.local"
+            DB_USERNAME: "immich"
+            DB_DATABASE_NAME: "immich"
+            DB_PASSWORD: "immich"
+            CREDENTIALS_DIRECTORY: "/data/credentials"
+  
+  immich:
+    metrics:
+      enabled: false
+    persistence:
+      library:
+        existingClaim: immich-library-pvc
+    configuration: {}   
+  
+  # Immich components
+  server:
+    enabled: true
+    image:
+      repository: ghcr.io/immich-app/immich-server
+      pullPolicy: IfNotPresent
+    ingress:
+      main:
+        enabled: false
+  
+  machine-learning:
+    enabled: true
+    image:
+      repository: ghcr.io/immich-app/immich-machine-learning
+      pullPolicy: IfNotPresent
+    env:
+      TRANSFORMERS_CACHE: /cache
+    persistence:
+      cache:
+        enabled: true
+        size: 10Gi
+        existingClaim: immich-ml-pvc

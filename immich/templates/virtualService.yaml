@@ -1,0 +1,38 @@
+{{- if .Values.virtualService.hosts }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.virtualService.name }}-vs
+spec:
+  hosts:
+{{- range .Values.virtualService.hosts }}
+    - {{ . }}
+{{- end }}
+  gateways:
+    - "istio-system/{{ .Release.Namespace }}-gateway"
+  http:
+{{- if .Values.virtualService.redirectToPrimary }}
+{{- if .Values.virtualService.hosts }}
+    - match:
+        - uri:
+            prefix: "/"
+          authority:
+            regex: "^www\\.(.*)"
+      redirect:
+        authority: "{{ .Values.virtualService.hosts | first }}"
+{{- end }}
+{{- end }}
+    - match:
+      - uri:
+          prefix: /
+        scheme:
+          exact: http
+      redirect:
+        scheme: https
+        redirectCode: 302
+    - route:
+        - destination:
+            host: {{ printf "%s-server" .Release.Name }}
+            port:
+              number: 2283
+{{- end }}

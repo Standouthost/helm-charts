@@ -1,0 +1,10 @@
+apiVersion: v2
+name: immich
+description: Immich application chart that wraps the upstream immich helm chart and configures Istio and cert-manager resources
+type: application
+version: 0.1.0
+appVersion: "latest"
+dependencies:
+  - name: immich
+    version: "0.10.3"
+    repository: "oci://ghcr.io/immich-app/immich-charts"
