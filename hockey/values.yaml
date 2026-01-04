@@ -1,0 +1,30 @@
+
+# Redis settings for this chart
+redis:
+  enabled: true
+  image:
+    repository: redis
+    tag: latest
+  service:
+    name: hockey-redis
+    port: 6379
+
+# Values passed to the webapp dependency via global or direct overrides
+webapp:
+  env:
+    REDIS_ADDR: "hockey-redis.hockey-soh-re.svc.cluster.local:6379" # default DNS for the Redis service (override at install time)
+  name: hockey-soh-re
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+    name: hockey-soh-re
+  virtualService:
+    hosts:
+      - "hockey.soh.re"
+  image:
+    repository: zot.soh.re
+    name: hockey
+    tag: "v1.9.0"
+    pullPolicy: IfNotPresent

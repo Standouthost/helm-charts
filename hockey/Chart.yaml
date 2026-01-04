@@ -1,0 +1,10 @@
+apiVersion: v2
+name: hockey
+description: A Helm chart for deploying hockey with a redis service
+type: application
+version: 0.1.0
+appVersion: "v1"
+dependencies:
+  - name: webapp
+    version: 2.4.0
+    repository: "oci://zot.soh.re"

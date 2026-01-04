@@ -1,0 +1,13 @@
+Thank you for installing hockey.
+
+Redis service: {{ include "hockey.fullname" . }}-redis
+Redis address (DNS): {{ include "hockey.redisAddr" . }}
+
+To pass Redis address to the `webapp` dependency, override the webapp values with:
+
+env:
+  REDIS_ADDR: {{ include "hockey.redisAddr" . }}
+
+For example using `helm` and a values file:
+
+helm upgrade --install hockey . -f values.yaml --set webapp.env.REDIS_ADDR={{ include "hockey.redisAddr" . }}
