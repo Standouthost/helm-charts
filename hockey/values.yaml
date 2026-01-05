@@ -26,5 +26,5 @@ webapp:
   image:
     repository: zot.soh.re
     name: hockey
-    tag: "v1.9.0"
+    tag: "v1.9.1"
     pullPolicy: IfNotPresent
