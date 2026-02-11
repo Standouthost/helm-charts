@@ -20,6 +20,14 @@ passbolt:
 
   # Use external Postgres instead of bundled mariadb/postgres
   app:
+    image:
+      # -- Configure pasbolt deployment image repsitory
+      registry: ""
+      repository: passbolt/passbolt
+      # -- Configure pasbolt deployment image pullPolicy
+      pullPolicy: IfNotPresent
+      # -- Overrides the image tag whose default is the chart appVersion.
+      tag: 5.9.0-1-ce
     tls:
       autogenerate: false
     database:
