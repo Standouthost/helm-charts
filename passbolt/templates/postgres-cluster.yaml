@@ -1,0 +1,19 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: passbolt-postgres
+  namespace: {{ .Release.Namespace }}
+spec:
+  instances: 1
+  managed:
+    roles:
+      - name: passbolt
+        superuser: true
+        login: true
+  bootstrap:
+    initdb:
+      database: passbolt
+      owner: passbolt
+  storage:
+    size: 4Gi
+    resizeInUseVolumes: true

@@ -1,0 +1,59 @@
+# Global Postgres settings for this umbrella chart (used by templates)
+postgresql:
+  secretName: passbolt-postgres-user
+
+# Parent-level virtual service config used by templates in this repo
+virtualService:
+  hosts: [passbolt.soh.re]
+  name: passbolt
+  redirectToPrimary: true
+
+cert:
+  issuer: letsencrypt-http
+
+pushSecret:
+  enabled: true
+  # Kubernetes Secret name which holds dbname/username/password
+  selectorSecretName: passbolt-postgres-app
+
+# Values to pass to the upstream passbolt subchart (named `passbolt` in Chart.yaml)
+passbolt:
+  # do not install the child's bundled redis; use an external redis instead
+  redisDependencyEnabled: false
+  mariadbDependencyEnabled: false
+  postgresqlDependencyEnabled: false
+
+  # Use external Postgres instead of bundled mariadb/postgres
+  app:
+    tls:
+      autogenerate: false
+    database:
+      kind: postgresql
+    # name of the Kubernetes Secret the chart will read for DB credentials
+    secretName: passbolt-secret
+    cache:
+      redis:
+        enabled: true
+        sentinelProxy:
+          enabled: false
+  # Use an external Redis instance (do not install the chart's Redis)
+  # Configure passbolt to connect to an existing Redis service
+  # Adjust these values to point to your Redis service
+  passboltEnv:
+    plain:
+      APP_FULL_BASE_URL: https://passbolt.soh.re
+      DATASOURCES_DEFAULT_HOST: passbolt-postgres-rw
+      DATASOURCES_DEFAULT_PORT: "5432"
+      PASSBOLT_KEY_EMAIL: passbolt@soh.re
+      PASSBOLT_SSL_FORCE: false
+      PASSBOLT_REGISTRATION_PUBLIC: false
+      KUBECTL_DOWNLOAD_CMD: "curl -LO https://dl.k8s.io/release/v1.35.0/bin/linux/amd64/kubectl"
+    extraEnvFrom:
+      - secretRef:
+          name: redis-secrets
+
+    secretName: passbolt-secret
+  ingress:
+    enabled: false
+    tls:
+      - autogenerate: false
