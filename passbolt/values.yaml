@@ -13,6 +13,12 @@ cert:
 
 # Values to pass to the upstream passbolt subchart (named `passbolt` in Chart.yaml)
 passbolt:
+  # Use an existing secret for GPG keys so ArgoCD/Helm don't overwrite them on sync.
+  # Create the secret once (e.g. via ExternalSecret from Vault) with keys:
+  # serverkey.asc, serverkey_private.asc. Set PASSBOLT_GPG_SERVER_KEY_FINGERPRINT
+  # in your passbolt env/secret to match the key.
+  gpgExistingSecret: passbolt-gpg-keys
+
   # do not install the child's bundled redis; use an external redis instead
   redisDependencyEnabled: false
   mariadbDependencyEnabled: false
