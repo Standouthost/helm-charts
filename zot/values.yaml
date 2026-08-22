@@ -83,10 +83,3 @@ name: zot-virtualservice
 
 externalSecret:
   enabled: true
-
-persistentVolume:
-  enabled: false
-  name: zot-pvc
-  accessMode: ReadWriteOnce
-  size: 8Gi
-  storageClassName: ""
