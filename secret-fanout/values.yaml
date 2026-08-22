@@ -3,4 +3,5 @@ source:
   secretName: source-secret
 store:
   name: kubernetes-source
+refreshInterval: 1h
 targets: []

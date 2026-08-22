@@ -6,7 +6,7 @@ metadata:
   name: {{ $.Values.source.secretName }}
   namespace: {{ . }}
 spec:
-  refreshInterval: 1h
+  refreshInterval: {{ $.Values.refreshInterval }}
   secretStoreRef:
     kind: ClusterSecretStore
     name: {{ $.Values.store.name }}
