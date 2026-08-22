@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.store.name }}
+  namespace: {{ .Values.source.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Values.store.name }}
+  namespace: {{ .Values.source.namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: [{{ .Values.source.secretName | quote }}]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.store.name }}
+  namespace: {{ .Values.source.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Values.store.name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.store.name }}
+    namespace: {{ .Values.source.namespace }}
+---
+apiVersion: external-secrets.io/v1
+kind: ClusterSecretStore
+metadata:
+  name: {{ .Values.store.name }}
+spec:
+  provider:
+    kubernetes:
+      remoteNamespace: {{ .Values.source.namespace }}
+      server:
+        caProvider:
+          type: ConfigMap
+          name: kube-root-ca.crt
+          key: ca.crt
+          namespace: {{ .Values.source.namespace }}
+      auth:
+        serviceAccount:
+          name: {{ .Values.store.name }}
+          namespace: {{ .Values.source.namespace }}

@@ -1,0 +1,6 @@
+source:
+  namespace: default
+  secretName: source-secret
+store:
+  name: kubernetes-source
+targets: []

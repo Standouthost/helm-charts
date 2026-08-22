@@ -1,0 +1,5 @@
+apiVersion: v2
+name: secret-fanout
+description: Fan out a Kubernetes Secret to namespaces with External Secrets
+type: application
+version: 1.0.0

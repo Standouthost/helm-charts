@@ -1,0 +1,35 @@
+{{- range .Values.targets }}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $.Values.source.secretName }}
+  namespace: {{ . }}
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: {{ $.Values.store.name }}
+  target:
+    name: {{ $.Values.source.secretName }}
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Replace
+  dataFrom:
+    - extract:
+        key: {{ $.Values.source.secretName }}
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: {{ . }}
+imagePullSecrets:
+  - name: {{ $.Values.source.secretName }}
+{{- end }}

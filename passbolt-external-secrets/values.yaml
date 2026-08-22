@@ -1,0 +1,10 @@
+store:
+  name: passbolt
+  host: https://passbolt.example.com
+  authSecret:
+    name: passbolt-credentials
+    namespace: external-secrets
+    passwordKey: password
+    privateKeyKey: privateKey
+
+secrets: []

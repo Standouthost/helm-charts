@@ -1,0 +1,17 @@
+apiVersion: external-secrets.io/v1
+kind: ClusterSecretStore
+metadata:
+  name: {{ .Values.store.name }}
+spec:
+  provider:
+    passbolt:
+      host: {{ .Values.store.host }}
+      auth:
+        passwordSecretRef:
+          name: {{ .Values.store.authSecret.name }}
+          namespace: {{ .Values.store.authSecret.namespace }}
+          key: {{ .Values.store.authSecret.passwordKey }}
+        privateKeySecretRef:
+          name: {{ .Values.store.authSecret.name }}
+          namespace: {{ .Values.store.authSecret.namespace }}
+          key: {{ .Values.store.authSecret.privateKeyKey }}

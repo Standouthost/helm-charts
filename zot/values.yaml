@@ -80,3 +80,6 @@ service:
   name: zot
   targetPort: 5000
 name: zot-virtualservice
+
+externalSecret:
+  enabled: true
