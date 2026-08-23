@@ -10,6 +10,12 @@ spec:
   gateways:
     - "istio-system/{{ .Release.Namespace }}-gateway"
   http:
+    - match:
+        - uri:
+            exact: /login
+      redirect:
+        uri: /zot/auth/login?provider=github
+        redirectCode: 302
 {{- if .Values.virtualService.redirectToPrimary }}
     - match:
         - uri:
