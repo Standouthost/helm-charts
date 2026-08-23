@@ -165,6 +165,6 @@ externalSecret:
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
   clientId: Ov23liLygAflIzrCKJhi
 notationTrust:
-  enabled: true
+  enabled: false
   storeName: passbolt
-  resourceId: 48ae833b-b591-4ca8-92bf-7ec00d07deca
+  resourceId: ""
