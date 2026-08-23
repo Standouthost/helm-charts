@@ -17,8 +17,6 @@ ha:
   externalSecrets:
     - secretName: sso-secret
       mountPath: /secrets/oidc
-    - secretName: notation-trust-store
-      mountPath: /var/lib/registry/_notation/truststore/x509/ca/default
   primary:
     nodeName: white-intel
     configFiles:
@@ -69,6 +67,10 @@ ha:
               }
             },
             "accessControl": {
+              "adminPolicy": {
+                "users": ["jon@soh.re"],
+                "actions": ["read", "create", "update", "delete"]
+              },
               "repositories": {
                 "**": {
                   "policies": [{
@@ -145,6 +147,10 @@ ha:
               }
             },
             "accessControl": {
+              "adminPolicy": {
+                "users": ["jon@soh.re"],
+                "actions": ["read", "create", "update", "delete"]
+              },
               "repositories": {
                 "**": {
                   "policies": [{
@@ -164,7 +170,3 @@ externalSecret:
   storeName: passbolt
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
   clientId: Ov23liLygAflIzrCKJhi
-notationTrust:
-  enabled: false
-  storeName: passbolt
-  resourceId: ""
