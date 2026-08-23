@@ -73,3 +73,5 @@ name: zot-virtualservice
 
 externalSecret:
   enabled: true
+  storeName: passbolt
+  resourceId: a604544c-67bd-4080-ae39-27cbca345708
