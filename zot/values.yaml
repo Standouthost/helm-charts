@@ -32,7 +32,21 @@ ha:
           "extensions": {
             "scrub": { "enable": true, "interval": "24h" },
             "metrics": { "enable": true },
-            "lint": { "enable": true },
+            "lint": {
+              "enable": true,
+              "mandatoryAnnotations": [
+                "org.opencontainers.image.authors",
+                "org.opencontainers.image.created",
+                "org.opencontainers.image.description",
+                "org.opencontainers.image.licenses",
+                "org.opencontainers.image.revision",
+                "org.opencontainers.image.source",
+                "org.opencontainers.image.title",
+                "org.opencontainers.image.url",
+                "org.opencontainers.image.vendor",
+                "org.opencontainers.image.version"
+              ]
+            },
             "trust": { "enable": true, "cosign": true, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true }
@@ -81,7 +95,21 @@ ha:
           "extensions": {
             "scrub": { "enable": true, "interval": "24h" },
             "metrics": { "enable": true },
-            "lint": { "enable": true },
+            "lint": {
+              "enable": true,
+              "mandatoryAnnotations": [
+                "org.opencontainers.image.authors",
+                "org.opencontainers.image.created",
+                "org.opencontainers.image.description",
+                "org.opencontainers.image.licenses",
+                "org.opencontainers.image.revision",
+                "org.opencontainers.image.source",
+                "org.opencontainers.image.title",
+                "org.opencontainers.image.url",
+                "org.opencontainers.image.vendor",
+                "org.opencontainers.image.version"
+              ]
+            },
             "trust": { "enable": true, "cosign": true, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true },
