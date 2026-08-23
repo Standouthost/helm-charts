@@ -14,7 +14,7 @@ webapp:
   env:
     REDIS_ADDR: "hockey-redis.hockey-soh-re.svc.cluster.local:6379" # default DNS for the Redis service (override at install time)
   name: hockey-soh-re
-  replicaCount: 2
+  replicaCount: 1
   service:
     type: ClusterIP
     port: 80
