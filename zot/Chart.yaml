@@ -5,3 +5,4 @@ dependencies:
   - name: zot
     version: 0.1.122
     repository: http://zotregistry.dev/helm-charts
+    condition: zot.enabled
