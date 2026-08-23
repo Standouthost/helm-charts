@@ -1,18 +1,45 @@
 zot:
-  env: []
+  replicaCount: 2
+  env:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: zot-s3-credentials
+          key: ZOT_SOH_RE_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: zot-s3-credentials
+          key: ZOT_SOH_RE_SECRET_ACCESS_KEY
   image:
     tag: v2.1.20
   startupProbe:
     failureThreshold: 180
   strategy:
-    type: Recreate
-    rollingUpdate: null
+    type: RollingUpdate
   service:
     type: ClusterIP
   persistence: true
   pvc:
     create: true
-    storage: 80Gi
+    name: zot-cache
+    storage: 1Gi
+    storageClassName: longhorn
+  serviceHeadless:
+    enabled: true
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - '{{ .Release.Name }}'
+          topologyKey: kubernetes.io/hostname
   nodeSelector:
     kubernetes.io/arch: amd64
   externalSecrets:
@@ -24,7 +51,23 @@ zot:
       {
         "storage": {
           "rootDirectory": "/var/lib/registry",
-          "fastRestart": true
+          "dedupe": false,
+          "remoteCache": true,
+          "storageDriver": {
+            "name": "s3",
+            "rootdirectory": "/zot",
+            "region": "garage",
+            "regionendpoint": "garage.garage.svc.cluster.local:3900",
+            "bucket": "zot-soh-re",
+            "forcepathstyle": true,
+            "secure": false,
+            "skipverify": false
+          },
+          "cacheDriver": {
+            "name": "redis",
+            "url": "redis://valkey.garage.svc.cluster.local:6379",
+            "keyprefix": "zot-soh-re"
+          }
         },
         "log": { "level": "info" },
         "extensions": {
@@ -61,6 +104,13 @@ zot:
               }
             }
           }
+        },
+        "cluster": {
+          "members": [
+            "zot-0.zot-headless.zot.svc.cluster.local:5000",
+            "zot-1.zot-headless.zot.svc.cluster.local:5000"
+          ],
+          "hashKey": "zotsohrecluster1"
         }
       }
 
