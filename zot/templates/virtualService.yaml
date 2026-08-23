@@ -10,6 +10,16 @@ spec:
   gateways:
     - "istio-system/{{ .Release.Namespace }}-gateway"
   http:
+{{- if .Values.cveService.enabled }}
+    - match:
+        - uri:
+            prefix: /v2/_zot/ext/cve
+      route:
+        - destination:
+            host: {{ .Values.cveService.name }}
+            port:
+              number: 5000
+{{- end }}
 {{- if .Values.virtualService.redirectToPrimary }}
     - match:
         - uri:

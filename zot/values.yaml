@@ -25,6 +25,8 @@ zot:
     name: zot-cache
     storage: 1Gi
     storageClassName: longhorn
+  deploymentAnnotations:
+    argocd.argoproj.io/sync-options: Replace=true
   serviceHeadless:
     enabled: true
   podDisruptionBudget:
@@ -113,12 +115,70 @@ zot:
         }
       }
 
+cve:
+  enabled: true
+  image:
+    repository: ghcr.io/project-zot/zot
+    tag: v2.1.20
+    pullPolicy: IfNotPresent
+  storage:
+    storage: 100Gi
+    storageClassName: longhorn
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  configFiles:
+    config.json: |-
+      {
+        "storage": {
+          "rootDirectory": "/var/lib/registry",
+          "gc": true,
+          "gcDelay": "1h",
+          "gcInterval": "24h"
+        },
+        "log": { "level": "info" },
+        "extensions": {
+          "metrics": { "enable": true },
+          "search": {
+            "enable": true,
+            "cve": { "updateInterval": "2h" }
+          },
+          "sync": {
+            "enable": true,
+            "registries": [{
+              "urls": ["http://zot:5000"],
+              "onDemand": false,
+              "pollInterval": "15m",
+              "tlsVerify": false,
+              "maxRetries": 5,
+              "retryDelay": "1m",
+              "preserveDigest": true,
+              "content": [{ "prefix": "**" }]
+            }]
+          }
+        },
+        "http": {
+          "address": "0.0.0.0",
+          "port": "5000",
+          "compat": ["docker2s2"],
+          "accessControl": {
+            "repositories": {
+              "**": {
+                "anonymousPolicy": ["read"]
+              }
+            }
+          }
+        }
+      }
+
 virtualService:
   hosts:
     - "zot.soh.re"
 service:
   name: zot
   targetPort: 5000
+cveService:
+  enabled: true
+  name: zot-cve
 name: zot-virtualservice
 
 externalSecret:
