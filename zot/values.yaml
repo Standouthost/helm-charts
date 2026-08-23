@@ -1,5 +1,5 @@
 zot:
-  enabled: true
+  enabled: false
   replicaCount: 2
   env:
     - name: AWS_ACCESS_KEY_ID
@@ -119,7 +119,7 @@ zot:
       }
 
 cve:
-  enabled: true
+  enabled: false
   image:
     repository: ghcr.io/project-zot/zot
     tag: v2.1.20
@@ -177,10 +177,10 @@ virtualService:
   hosts:
     - "zot.soh.re"
 service:
-  name: zot-ha
+  name: zot-local-primary
   targetPort: 5000
 cveService:
-  enabled: true
+  enabled: false
   name: zot-cve-v2
 
 ha:
@@ -211,20 +211,7 @@ ha:
           "extensions": {
             "metrics": { "enable": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
-            "ui": { "enable": true },
-            "sync": {
-              "enable": true,
-              "registries": [{
-                "urls": ["http://zot-ha:5000"],
-                "onDemand": false,
-                "pollInterval": "5m",
-                "tlsVerify": false,
-                "maxRetries": 5,
-                "retryDelay": "1m",
-                "preserveDigest": true,
-                "content": [{ "prefix": "**" }]
-              }]
-            }
+            "ui": { "enable": true }
           },
           "http": {
             "address": "0.0.0.0",
