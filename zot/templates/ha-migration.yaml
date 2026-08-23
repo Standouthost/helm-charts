@@ -1,4 +1,36 @@
 {{- if .Values.ha.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.ha.name }}
+spec:
+  selector:
+    zotregistry.dev/ha-group: {{ .Values.ha.name }}
+  ports:
+    - name: zot
+      port: 5000
+      targetPort: zot
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: {{ .Values.ha.name }}-failover
+spec:
+  host: {{ .Values.ha.name }}.{{ .Release.Namespace }}.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+      localityLbSetting:
+        enabled: true
+        failoverPriority:
+          - zotregistry.dev/ha-role=primary
+    outlierDetection:
+      consecutive5xxErrors: 1
+      consecutiveGatewayErrors: 1
+      interval: 1s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 100
+---
 {{- range $role := list "primary" "standby" }}
 {{- $instance := index $.Values.ha $role }}
 apiVersion: v1
@@ -40,6 +72,8 @@ spec:
       labels:
         app.kubernetes.io/instance: {{ $.Release.Name }}
         app.kubernetes.io/name: {{ $.Values.ha.name }}-{{ $role }}
+        zotregistry.dev/ha-group: {{ $.Values.ha.name }}
+        zotregistry.dev/ha-role: {{ $role }}
       annotations:
         checksum/config: {{ toJson $instance.configFiles | sha256sum }}
     spec:

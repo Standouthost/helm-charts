@@ -29,6 +29,6 @@ spec:
         redirectCode: 302
     - route:
         - destination:
-            host: {{ .Values.service.name }}
+            host: {{ .Values.service.name }}.{{ .Release.Namespace }}.svc.cluster.local
             port:
               number: {{ .Values.service.targetPort }}

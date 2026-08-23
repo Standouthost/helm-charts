@@ -2,7 +2,7 @@ virtualService:
   hosts:
     - "zot.soh.re"
 service:
-  name: zot-local-primary
+  name: zot-local
   targetPort: 5000
 ha:
   enabled: true
