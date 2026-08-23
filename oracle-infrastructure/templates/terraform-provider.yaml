@@ -1,6 +1,0 @@
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-terraform
-spec:
-  package: ghcr.io/crossplane-contrib/provider-terraform:v1.0.0
