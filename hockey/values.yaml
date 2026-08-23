@@ -4,7 +4,7 @@ redis:
   enabled: true
   image:
     repository: redis
-    tag: 8.8.2-alpine
+    tag: 8.10.1-alpine
   service:
     name: hockey-redis
     port: 6379
