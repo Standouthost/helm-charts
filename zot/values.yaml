@@ -17,8 +17,8 @@ ha:
   externalSecrets:
     - secretName: sso-secret
       mountPath: /secrets/oidc
-    - secretName: cosign-public-key
-      mountPath: /var/lib/registry/_cosign
+    - secretName: notation-trust-store
+      mountPath: /var/lib/registry/_notation/truststore/x509/ca/default
   primary:
     nodeName: white-intel
     configFiles:
@@ -49,7 +49,7 @@ ha:
                 "org.opencontainers.image.version"
               ]
             },
-            "trust": { "enable": true, "cosign": true, "notation": true },
+            "trust": { "enable": true, "cosign": false, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true }
           },
@@ -112,7 +112,7 @@ ha:
                 "org.opencontainers.image.version"
               ]
             },
-            "trust": { "enable": true, "cosign": true, "notation": true },
+            "trust": { "enable": true, "cosign": false, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true },
             "sync": {
@@ -164,7 +164,7 @@ externalSecret:
   storeName: passbolt
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
   clientId: Ov23liLygAflIzrCKJhi
-cosignPublicKey:
+notationTrust:
   enabled: true
   storeName: passbolt
-  resourceId: d72d2c5a-7954-4f0d-980b-0c3c4db3bcef
+  resourceId: 48ae833b-b591-4ca8-92bf-7ec00d07deca
