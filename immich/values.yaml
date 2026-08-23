@@ -38,7 +38,7 @@ immich:
       containers:
         main:
           image:
-            tag: v2.4.1
+            tag: v3.1.0
           env:
             REDIS_HOSTNAME: '{{ printf "%s-valkey" .Release.Name }}'
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
@@ -73,8 +73,10 @@ immich:
       pullPolicy: IfNotPresent
     env:
       TRANSFORMERS_CACHE: /cache
+      HF_XET_CACHE: /cache/huggingface-xet
+      MPLCONFIGDIR: /cache/matplotlib-config
     persistence:
       cache:
         enabled: true
-        size: 10Gi
+        type: persistentVolumeClaim
         existingClaim: immich-ml-pvc
