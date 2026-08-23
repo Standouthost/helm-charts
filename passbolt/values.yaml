@@ -33,7 +33,7 @@ passbolt:
       # -- Configure pasbolt deployment image pullPolicy
       pullPolicy: IfNotPresent
       # -- Overrides the image tag whose default is the chart appVersion.
-      tag: 5.13.0-1-ce
+      tag: 5.15.0-1-ce
     tls:
       autogenerate: false
     database:
