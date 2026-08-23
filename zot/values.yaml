@@ -25,8 +25,6 @@ zot:
     name: zot-cache
     storage: 1Gi
     storageClassName: longhorn
-  deploymentAnnotations:
-    argocd.argoproj.io/sync-options: Force=true,Replace=true
   serviceHeadless:
     enabled: true
   podDisruptionBudget:
@@ -108,8 +106,8 @@ zot:
         },
         "cluster": {
           "members": [
-            "zot-0.zot-headless.zot.svc.cluster.local:5000",
-            "zot-1.zot-headless.zot.svc.cluster.local:5000"
+            "zot-ha-0.zot-ha-headless.zot.svc.cluster.local:5000",
+            "zot-ha-1.zot-ha-headless.zot.svc.cluster.local:5000"
           ],
           "hashKey": "zotsohrecluster1"
         }
@@ -145,7 +143,7 @@ cve:
           "sync": {
             "enable": true,
             "registries": [{
-              "urls": ["http://zot:5000"],
+              "urls": ["http://zot-ha:5000"],
               "onDemand": false,
               "pollInterval": "15m",
               "tlsVerify": false,
@@ -174,7 +172,7 @@ virtualService:
   hosts:
     - "zot.soh.re"
 service:
-  name: zot
+  name: zot-ha
   targetPort: 5000
 cveService:
   enabled: true
