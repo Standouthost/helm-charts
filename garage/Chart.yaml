@@ -1,0 +1,11 @@
+apiVersion: v2
+name: garage-stack
+description: Garage object storage and Valkey metadata for Zot
+type: application
+version: 0.1.0
+appVersion: "v2.3.0"
+dependencies:
+  - name: garage
+    version: "0.9.3"
+    repository: "file://charts/garage"
+
