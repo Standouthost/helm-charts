@@ -26,7 +26,7 @@ zot:
     storage: 1Gi
     storageClassName: longhorn
   deploymentAnnotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
   serviceHeadless:
     enabled: true
   podDisruptionBudget:
