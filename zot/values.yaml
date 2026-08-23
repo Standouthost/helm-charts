@@ -39,6 +39,10 @@ zot:
                 operator: In
                 values:
                   - '{{ .Release.Name }}'
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - zot
           topologyKey: kubernetes.io/hostname
   nodeSelector:
     kubernetes.io/arch: amd64
