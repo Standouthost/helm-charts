@@ -73,8 +73,7 @@ zot:
         "extensions": {
           "metrics": { "enable": true },
           "search": {
-            "enable": true,
-            "cve": { "updateInterval": "2h" }
+            "enable": true
           },
           "ui": { "enable": true }
         },
