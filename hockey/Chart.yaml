@@ -2,8 +2,8 @@ apiVersion: v2
 name: hockey
 description: A Helm chart for deploying hockey with a redis service
 type: application
-version: 0.1.0
-appVersion: "v1"
+version: 0.1.1
+appVersion: "v1.13.0"
 dependencies:
   - name: helm-webapp
     alias: webapp

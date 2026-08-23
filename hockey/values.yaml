@@ -4,7 +4,7 @@ redis:
   enabled: true
   image:
     repository: redis
-    tag: latest
+    tag: 8.8.2-alpine
   service:
     name: hockey-redis
     port: 6379
@@ -25,6 +25,6 @@ webapp:
       - "hockey.soh.re"
   image:
     repository: zot.soh.re
-    name: hockey
-    tag: "v1.12.1"
+    name: jmainguy/hockey
+    tag: "v1.13.0"
     pullPolicy: IfNotPresent
