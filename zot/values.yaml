@@ -30,7 +30,10 @@ ha:
           },
           "log": { "level": "info" },
           "extensions": {
+            "scrub": { "enable": true, "interval": "24h" },
             "metrics": { "enable": true },
+            "lint": { "enable": true },
+            "trust": { "enable": true, "cosign": true, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true }
           },
@@ -76,7 +79,10 @@ ha:
           },
           "log": { "level": "info" },
           "extensions": {
+            "scrub": { "enable": true, "interval": "24h" },
             "metrics": { "enable": true },
+            "lint": { "enable": true },
+            "trust": { "enable": true, "cosign": true, "notation": true },
             "search": { "enable": true, "cve": { "updateInterval": "2h" } },
             "ui": { "enable": true },
             "sync": {
