@@ -1,10 +1,7 @@
 zot:
-  env:
-    - name: GITHUB_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: sso-secret
-          key: clientSecret
+  env: []
+  image:
+    tag: v2.1.20
   strategy:
     type: Recreate
     rollingUpdate: null
@@ -18,7 +15,7 @@ zot:
     kubernetes.io/arch: amd64
   externalSecrets:
     - secretName: "sso-secret"
-      mountPath: "/secrets/clientSecret"
+      mountPath: "/secrets/oidc"
   mountConfig: true
   configFiles:
     config.json: |-
@@ -41,8 +38,7 @@ zot:
             "openid": {
               "providers": {
                 "github": {
-                  "clientid": "Ov23liLygAflIzrCKJhi",
-                  "clientsecret": "${GITHUB_CLIENT_SECRET}",
+                  "credentialsFile": "/secrets/oidc/github-oidc.json",
                   "scopes": ["read:org", "user", "repo"]
                 }
               }
@@ -75,3 +71,4 @@ externalSecret:
   enabled: true
   storeName: passbolt
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
+  clientId: Ov23liLygAflIzrCKJhi
