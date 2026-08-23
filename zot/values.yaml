@@ -17,6 +17,8 @@ ha:
   externalSecrets:
     - secretName: sso-secret
       mountPath: /secrets/oidc
+    - secretName: cosign-public-key
+      mountPath: /var/lib/registry/_cosign
   primary:
     nodeName: white-intel
     configFiles:
@@ -162,3 +164,7 @@ externalSecret:
   storeName: passbolt
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
   clientId: Ov23liLygAflIzrCKJhi
+cosignPublicKey:
+  enabled: true
+  storeName: passbolt
+  resourceId: d72d2c5a-7954-4f0d-980b-0c3c4db3bcef
