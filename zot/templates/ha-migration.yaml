@@ -1,0 +1,110 @@
+{{- if .Values.ha.enabled }}
+{{- range $role := list "primary" "standby" }}
+{{- $instance := index $.Values.ha $role }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Values.ha.name }}-{{ $role }}-config
+data:
+{{- range $name, $contents := $instance.configFiles }}
+  {{ $name }}: |-
+{{ $contents | indent 4 }}
+{{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.ha.name }}-{{ $role }}
+spec:
+  selector:
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/name: {{ $.Values.ha.name }}-{{ $role }}
+  ports:
+    - name: zot
+      port: 5000
+      targetPort: zot
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $.Values.ha.name }}-{{ $role }}
+spec:
+  replicas: 1
+  serviceName: {{ $.Values.ha.name }}-{{ $role }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ $.Release.Name }}
+      app.kubernetes.io/name: {{ $.Values.ha.name }}-{{ $role }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+        app.kubernetes.io/name: {{ $.Values.ha.name }}-{{ $role }}
+      annotations:
+        checksum/config: {{ toJson $instance.configFiles | sha256sum }}
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: {{ $instance.nodeName }}
+{{- with $.Values.ha.initContainers }}
+      initContainers:
+{{ toYaml . | indent 8 }}
+{{- end }}
+      containers:
+        - name: zot
+          image: "{{ $.Values.ha.image.repository }}:{{ $.Values.ha.image.tag }}"
+          imagePullPolicy: {{ $.Values.ha.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: zot
+              containerPort: 5000
+          startupProbe:
+            httpGet:
+              path: /startupz
+              port: zot
+            periodSeconds: 10
+            failureThreshold: 180
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: zot
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: zot
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/registry
+            - name: config
+              mountPath: /etc/zot
+{{- range $.Values.ha.externalSecrets }}
+            - name: {{ .secretName }}
+              mountPath: {{ .mountPath }}
+              readOnly: true
+{{- end }}
+{{- with $.Values.ha.extraVolumeMounts }}
+{{ toYaml . | indent 12 }}
+{{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ $.Values.ha.name }}-{{ $role }}-config
+{{- range $.Values.ha.externalSecrets }}
+        - name: {{ .secretName }}
+          secret:
+            secretName: {{ .secretName }}
+{{- end }}
+{{- with $.Values.ha.extraVolumes }}
+{{ toYaml . | indent 8 }}
+{{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: {{ $.Values.ha.storage.storageClassName }}
+        resources:
+          requests:
+            storage: {{ $.Values.ha.storage.size }}
+---
+{{- end }}
+{{- end }}

@@ -181,6 +181,138 @@ service:
 cveService:
   enabled: true
   name: zot-cve-v2
+
+ha:
+  enabled: true
+  name: zot-local
+  image:
+    repository: ghcr.io/project-zot/zot
+    tag: v2.1.20
+    pullPolicy: IfNotPresent
+  storage:
+    storageClassName: longhorn-single-replica
+    size: 20Gi
+  externalSecrets:
+    - secretName: sso-secret
+      mountPath: /secrets/oidc
+  primary:
+    nodeName: white-intel
+    configFiles:
+      config.json: &mainHaConfig |-
+        {
+          "storage": {
+            "rootDirectory": "/var/lib/registry",
+            "gc": true,
+            "gcDelay": "1h",
+            "gcInterval": "24h"
+          },
+          "log": { "level": "info" },
+          "extensions": {
+            "metrics": { "enable": true },
+            "search": { "enable": true, "cve": { "updateInterval": "2h" } },
+            "ui": { "enable": true },
+            "sync": {
+              "enable": true,
+              "registries": [{
+                "urls": ["http://zot-ha:5000"],
+                "onDemand": false,
+                "pollInterval": "5m",
+                "tlsVerify": false,
+                "maxRetries": 5,
+                "retryDelay": "1m",
+                "preserveDigest": true,
+                "content": [{ "prefix": "**" }]
+              }]
+            }
+          },
+          "http": {
+            "address": "0.0.0.0",
+            "port": "5000",
+            "compat": ["docker2s2"],
+            "externalUrl": "https://zot.soh.re",
+            "auth": {
+              "openid": {
+                "providers": {
+                  "github": {
+                    "credentialsFile": "/secrets/oidc/github-oidc.json",
+                    "scopes": ["read:org", "user", "repo"]
+                  }
+                }
+              }
+            },
+            "accessControl": {
+              "repositories": {
+                "**": {
+                  "policies": [{
+                    "users": ["jon@soh.re"],
+                    "actions": ["read", "create", "update", "delete"]
+                  }],
+                  "defaultPolicy": ["read"],
+                  "anonymousPolicy": ["read"]
+                }
+              }
+            }
+          }
+        }
+  standby:
+    nodeName: black-intel
+    configFiles:
+      config.json: |-
+        {
+          "storage": {
+            "rootDirectory": "/var/lib/registry",
+            "gc": true,
+            "gcDelay": "1h",
+            "gcInterval": "24h"
+          },
+          "log": { "level": "info" },
+          "extensions": {
+            "metrics": { "enable": true },
+            "search": { "enable": true, "cve": { "updateInterval": "2h" } },
+            "ui": { "enable": true },
+            "sync": {
+              "enable": true,
+              "registries": [{
+                "urls": ["http://zot-local-primary:5000"],
+                "onDemand": false,
+                "pollInterval": "5m",
+                "tlsVerify": false,
+                "maxRetries": 5,
+                "retryDelay": "1m",
+                "preserveDigest": true,
+                "content": [{ "prefix": "**" }]
+              }]
+            }
+          },
+          "http": {
+            "address": "0.0.0.0",
+            "port": "5000",
+            "compat": ["docker2s2"],
+            "externalUrl": "https://zot.soh.re",
+            "auth": {
+              "openid": {
+                "providers": {
+                  "github": {
+                    "credentialsFile": "/secrets/oidc/github-oidc.json",
+                    "scopes": ["read:org", "user", "repo"]
+                  }
+                }
+              }
+            },
+            "accessControl": {
+              "repositories": {
+                "**": {
+                  "policies": [{
+                    "users": ["jon@soh.re"],
+                    "actions": ["read", "create", "update", "delete"]
+                  }],
+                  "defaultPolicy": ["read"],
+                  "anonymousPolicy": ["read"]
+                }
+              }
+            }
+          }
+        }
 name: zot-virtualservice
 
 externalSecret:
