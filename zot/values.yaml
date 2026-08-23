@@ -2,6 +2,8 @@ zot:
   env: []
   image:
     tag: v2.1.20
+  startupProbe:
+    failureThreshold: 180
   strategy:
     type: Recreate
     rollingUpdate: null
@@ -20,7 +22,10 @@ zot:
   configFiles:
     config.json: |-
       {
-        "storage": { "rootDirectory": "/var/lib/registry" },
+        "storage": {
+          "rootDirectory": "/var/lib/registry",
+          "fastRestart": true
+        },
         "log": { "level": "info" },
         "extensions": {
           "metrics": { "enable": true },
