@@ -72,3 +72,9 @@ externalSecret:
   storeName: passbolt
   resourceId: a604544c-67bd-4080-ae39-27cbca345708
   clientId: Ov23liLygAflIzrCKJhi
+
+sharedPvc:
+  enabled: false
+  name: zot-rwx
+  storage: 80Gi
+  storageClassName: longhorn
