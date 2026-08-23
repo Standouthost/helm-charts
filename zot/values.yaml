@@ -49,7 +49,7 @@ zot:
               "**": {
                 "policies": [{
                   "users": ["jon@soh.re"],
-                  "actions": ["read", "create", "update"]
+                  "actions": ["read", "create", "update", "delete"]
                 }],
                 "defaultPolicy": ["read"],
                 "anonymousPolicy": ["read"]
