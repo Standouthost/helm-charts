@@ -4,7 +4,7 @@ metadata:
   name: passbolt-postgres
   namespace: {{ .Release.Namespace }}
 spec:
-  instances: 1
+  instances: 2
   managed:
     roles:
       - connectionLimit: -1	
