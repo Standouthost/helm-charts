@@ -6,7 +6,7 @@ metadata:
   annotations:
     soh.re/base-pool-size: "2"
 spec:
-  image: zot.soh.re/soh.re:latest
+  image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
   port: 8080
   replicas: 2
   resources:

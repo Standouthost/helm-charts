@@ -2,9 +2,9 @@ name: static-upgrade
 replicaCount: 2
 
 image:
-  repository: zot.soh.re
+  repository: zot.soh.re/jmainguy
   name: soh.re
-  tag: v1.2.1
+  tag: v1.3.0
   pullPolicy: IfNotPresent
 
 service:
