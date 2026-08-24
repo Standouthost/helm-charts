@@ -1,0 +1,21 @@
+apiVersion: soh.re/v1alpha1
+kind: DedicatedService
+metadata:
+  name: soh-websocket
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    soh.re/base-pool-size: "2"
+spec:
+  image: zot.soh.re/soh.re:latest
+  port: 8080
+  replicas: 2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+  service:
+    port: 9090
+    type: ClusterIP
