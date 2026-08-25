@@ -12,6 +12,8 @@ data:
     http_access allow CONNECT HTTPS open_meteo
     http_access deny all
     cache deny all
+    cache_mem 16 MB
+    maximum_object_size_in_memory 0 KB
     access_log stdio:/dev/stdout
     cache_log /dev/null
 ---
@@ -45,10 +47,10 @@ spec:
         resources:
           requests:
             cpu: 25m
-            memory: 32Mi
+            memory: 64Mi
           limits:
             cpu: 200m
-            memory: 128Mi
+            memory: 256Mi
         volumeMounts:
         - name: config
           mountPath: /etc/squid/squid.conf
