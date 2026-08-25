@@ -14,8 +14,7 @@ data:
     cache deny all
     cache_mem 16 MB
     maximum_object_size_in_memory 0 KB
-    access_log stdio:/dev/stdout
-    cache_log /dev/null
+    access_log none
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,6 +35,12 @@ spec:
       - name: squid
         image: ubuntu/squid:6.6-24.04_beta
         imagePullPolicy: IfNotPresent
+        command:
+        - /usr/sbin/squid
+        args:
+        - -N
+        - -f
+        - /etc/squid/squid.conf
         ports:
         - name: proxy
           containerPort: 3128
