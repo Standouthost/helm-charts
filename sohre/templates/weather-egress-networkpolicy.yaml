@@ -12,19 +12,11 @@ spec:
   egress:
   - to:
     - ipBlock:
-        cidr: 0.0.0.0/0
-        except:
-        - 10.0.0.0/8
-        - 127.0.0.0/8
-        - 169.254.0.0/16
-        - 172.16.0.0/12
-        - 192.168.0.0/16
+        # geocoding-api.open-meteo.com
+        cidr: 202.61.206.6/32
     - ipBlock:
-        cidr: ::/0
-        except:
-        - ::1/128
-        - fc00::/7
-        - fe80::/10
+        # api.open-meteo.com
+        cidr: 188.40.99.226/32
     ports:
     - port: 443
       protocol: TCP
