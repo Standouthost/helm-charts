@@ -7,6 +7,9 @@ metadata:
     soh.re/base-pool-size: "2"
 spec:
   image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+  env:
+  - name: RES_OPTIONS
+    value: no-aaaa
   port: 8080
   replicas: 2
   resources:
