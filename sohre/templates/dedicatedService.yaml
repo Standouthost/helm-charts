@@ -8,6 +8,10 @@ metadata:
 spec:
   image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
   env:
+  - name: HTTPS_PROXY
+    value: http://weather-egress-proxy:3128
+  - name: https_proxy
+    value: http://weather-egress-proxy:3128
   - name: RES_OPTIONS
     value: no-aaaa
   port: 8080
