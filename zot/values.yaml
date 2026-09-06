@@ -9,7 +9,7 @@ ha:
   name: zot-local
   image:
     repository: ghcr.io/project-zot/zot
-    tag: v2.1.20
+    tag: v2.1.21
     pullPolicy: IfNotPresent
   storage:
     storageClassName: longhorn-single-replica
