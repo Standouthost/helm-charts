@@ -7,5 +7,5 @@ appVersion: "v1.13.0"
 dependencies:
   - name: helm-webapp
     alias: webapp
-    version: 4.2.4
+    version: 4.3.0
     repository: "oci://zot.soh.re/jmainguy"
