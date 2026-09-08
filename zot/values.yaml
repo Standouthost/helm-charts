@@ -9,7 +9,7 @@ ha:
   name: zot-local
   image:
     repository: ghcr.io/project-zot/zot
-    tag: v2.1.20
+    tag: v2.1.21
     pullPolicy: IfNotPresent
   storage:
     storageClassName: longhorn-single-replica
@@ -48,7 +48,13 @@ ha:
               ]
             },
             "trust": { "enable": true, "cosign": false, "notation": true },
-            "search": { "enable": true, "cve": { "updateInterval": "2h" } },
+            "search": {
+              "enable": true,
+              "cve": {
+                "updateInterval": "2h",
+                "trivy": { "ignoreFile": "/etc/zot/.trivyignore.yaml" }
+              }
+            },
             "ui": { "enable": true }
           },
           "http": {
@@ -84,6 +90,9 @@ ha:
             }
           }
         }
+      .trivyignore.yaml: |-
+        vulnerabilities:
+          - id: GO-2026-5932
   standby:
     nodeName: black-intel
     configFiles:
@@ -115,7 +124,13 @@ ha:
               ]
             },
             "trust": { "enable": true, "cosign": false, "notation": true },
-            "search": { "enable": true, "cve": { "updateInterval": "2h" } },
+            "search": {
+              "enable": true,
+              "cve": {
+                "updateInterval": "2h",
+                "trivy": { "ignoreFile": "/etc/zot/.trivyignore.yaml" }
+              }
+            },
             "ui": { "enable": true },
             "sync": {
               "enable": true,
@@ -164,6 +179,9 @@ ha:
             }
           }
         }
+      .trivyignore.yaml: |-
+        vulnerabilities:
+          - id: GO-2026-5932
 name: zot-virtualservice
 externalSecret:
   enabled: true
