@@ -7,4 +7,7 @@ store:
     passwordKey: password
     privateKeyKey: privateKey
 
+# Each entry may read a JSON password bundle with `keys`, combine JSON bundles
+# with `sources`, or map provider properties directly with `fields`. Passbolt
+# v5 custom fields use properties such as `custom_fields.API_TOKEN`.
 secrets: []
